@@ -12,7 +12,7 @@ public class PushRobot extends Robot {
 
     private final Program program;
 
-    public PushRobot() throws Exception {
+    public PushRobot() {
         final RobotUnaryIntInstruction ahead = new RobotUnaryIntInstruction("robot.ahead", this::ahead);
         final RobotUnaryIntInstruction back = new RobotUnaryIntInstruction("robot.back", this::back);
         final RobotUnaryIntInstruction turnLeft = new RobotUnaryIntInstruction("robot.turnleft", this::turnLeft);
@@ -23,15 +23,15 @@ public class PushRobot extends Robot {
         final RobotUnaryIntInstruction turnRadarRight = new RobotUnaryIntInstruction("robot.turnradarright", this::turnRadarRight);
         final RobotUnaryIntInstruction fire = new RobotUnaryIntInstruction("robot.fire", this::fire);
         this.interpreter = new RobotInterpreter(this::turnRadarLeft);
-        this.interpreter.SetRandomParameters(-500, 500, 1, -500, 500, 1, 40, 100);
+        this.interpreter.setRandomParameters(-500, 500, 1, -500, 500, 1, 40, 100);
         List.of(ahead, back, turnLeft, turnRight, turnGunLeft, turnGunRight, turnRadarLeft, turnRadarRight, fire)
-                .forEach(it -> interpreter.AddInstruction(it.getName(), it));
-        this.program = new Program(interpreter, System.getProperty("RobotProgram.push"));
+                .forEach(it -> interpreter.addInstruction(it.getName(), it));
+        this.program = new Program(System.getProperty("RobotProgram.push"));
     }
 
     @Override
     public void run() {
-        interpreter.Execute(program);
+        interpreter.execute(program);
     }
 
     @Override
