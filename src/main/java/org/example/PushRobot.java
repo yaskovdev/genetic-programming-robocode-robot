@@ -26,7 +26,12 @@ public class PushRobot extends Robot {
         this.interpreter.setRandomParameters(-500, 500, 1, -500, 500, 1, 40, 100);
         List.of(ahead, back, turnLeft, turnRight, turnGunLeft, turnGunRight, turnRadarLeft, turnRadarRight, fire)
                 .forEach(it -> interpreter.addInstruction(it.getName(), it));
-        this.program = new Program(System.getProperty("RobotProgram.push"));
+        String key = "RobotProgram.push";
+        String program = System.getProperty(key);
+        if (program == null) {
+            throw new RuntimeException("Cannot find program from property with key " + key);
+        }
+        this.program = new Program(program);
     }
 
     @Override

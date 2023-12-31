@@ -1,4 +1,10 @@
 mvn clean compile assembly:single
-rm "$env:ROBOCODE_HOME\robots\*.jar" -r -force
-rm "$env:ROBOCODE_HOME\robots\robot.database" -r -force
-cp "target\robocode-push-*.jar" "$env:ROBOCODE_HOME\robots"
+$Robots = "$env:ROBOCODE_HOME\robots"
+rm "$Robots\*.jar" -r -force
+if (Test-Path "$Robots\robot.database")
+{
+    rm "$Robots\robot.database" -r -force
+}
+cp "target\robocode-push-*.jar" $Robots
+
+echo "Installed robot to $Robots"
